@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doce Aroma — By Cesar Mattos Perfumes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f0f5f1;
+    --dark: #1e3028;
+    --gold: #5a8a6a;
+    --gold-light: #8dba9e;
+    --gold-pale: #d8ede0;
+    --text: #2a3d30;
+    --text-light: #6a8a74;
+    --border: #c4dece;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  header { background: var(--dark); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--gold-light); letter-spacing: 4px; text-transform: uppercase; display: flex; flex-direction: column; gap: 2px; }
+  .logo-sub { font-size: 11px; letter-spacing: 3px; color: var(--gold-light); font-style: italic; font-weight: 300; text-transform: uppercase; }
+  .header-btns { display: flex; gap: 10px; align-items: center; }
+  .cart-btn { background: var(--gold); color: var(--white); border: none; padding: 10px 18px; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 8px; }
+  .cart-btn:hover { background: #4a7a5a; }
+  .admin-btn { background: transparent; border: 1px solid rgba(141,186,158,0.5); color: var(--gold-light); padding: 9px 14px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .admin-btn:hover { border-color: var(--gold-light); background: rgba(141,186,158,0.1); }
+  .cart-count { background: var(--white); color: var(--dark); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--dark) 0%, #163320 100%); padding: 50px 40px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(90,138,106,0.2) 0%, transparent 70%); }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5vw, 58px); font-weight: 300; color: var(--white); letter-spacing: 6px; text-transform: uppercase; position: relative; }
+  .hero h1 em { color: var(--gold-light); font-style: italic; }
+  .hero p { color: var(--gold-pale); font-size: 13px; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; font-weight: 300; position: relative; }
+
+  /* TABS */
+  .tabs-wrapper { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 69px; z-index: 90; }
+  .tabs { display: flex; max-width: 1200px; margin: 0 auto; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 16px 24px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: none; background: none; color: var(--text-light); font-family: 'Jost', sans-serif; font-weight: 400; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .tab:hover { color: var(--gold); }
+  .tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 500; }
+
+  /* MAIN */
+  .main { max-width: 1200px; margin: 0 auto; padding: 36px 24px 80px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .category-section { margin-bottom: 44px; }
+  .category-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--dark); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+
+  /* PRODUCT GRID */
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  .product-card { background: var(--white); border: 1px solid var(--border); padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; }
+  .product-card:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(90,138,106,0.15); transform: translateY(-2px); }
+  .product-card.in-cart { border-color: var(--gold); background: var(--gold-pale); }
+  .product-img { width: 100px; height: 100px; object-fit: contain; }
+  .product-img-placeholder { width: 100px; height: 100px; background: var(--gold-pale); display: flex; align-items: center; justify-content: center; font-size: 30px; }
+  .product-name { font-size: 10px; letter-spacing: 0.5px; text-align: center; color: var(--text); line-height: 1.4; }
+  .add-btn { background: var(--gold); color: var(--white); border: none; padding: 5px 12px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; width: 100%; }
+  .add-btn:hover { background: #4a7a5a; }
+  .product-card.in-cart .add-btn { background: #5a9a5a; }
+
+  /* MODALS */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,20,16,0.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; animation: fadeIn 0.2s; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal { background: var(--white); max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 36px; position: relative; animation: slideUp 0.3s; }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-light); line-height: 1; }
+  .modal-close:hover { color: var(--dark); }
+  .modal h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; color: var(--dark); line-height: 1.3; }
+  .modal-subtitle { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+
+  /* SIZES */
+  .size-group { margin-bottom: 20px; }
+  .size-group .group-label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; }
+  .size-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .size-option { border: 1px solid var(--border); padding: 7px 14px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'Jost', sans-serif; background: none; color: var(--text); letter-spacing: 1px; }
+  .size-option:hover { border-color: var(--gold); }
+  .size-option.selected { background: var(--gold); border-color: var(--gold); color: var(--white); }
+
+  /* QTY */
+  .qty-group { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .qty-group label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+  .qty-ctrl { display: flex; align-items: center; }
+  .qty-btn { width: 30px; height: 30px; border: 1px solid var(--border); background: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; font-family: 'Jost', sans-serif; }
+  .qty-btn:hover { background: var(--gold-pale); }
+  .qty-input { width: 44px; height: 30px; border: 1px solid var(--border); border-left: none; border-right: none; text-align: center; font-size: 13px; font-family: 'Jost', sans-serif; }
+  .modal-add-btn { width: 100%; background: var(--dark); color: var(--white); border: none; padding: 14px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .modal-add-btn:hover { background: var(--gold); }
+
+  /* CART */
+  .cart-panel { display: none; position: fixed; top: 0; right: 0; width: min(460px, 100vw); height: 100vh; background: var(--white); z-index: 300; box-shadow: -4px 0 30px rgba(0,0,0,0.15); flex-direction: column; animation: slideLeft 0.3s; }
+  @keyframes slideLeft { from { transform: translateX(100%); } to { transform: translateX(0); } }
+  .cart-panel.open { display: flex; }
+  .cart-header { background: var(--dark); padding: 22px 26px; display: flex; align-items: center; justify-content: space-between; }
+  .cart-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--gold-light); letter-spacing: 3px; text-transform: uppercase; }
+  .cart-body { flex: 1; overflow-y: auto; padding: 18px 26px; }
+  .cart-footer { padding: 18px 26px; border-top: 1px solid var(--border); }
+  .cart-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 10px; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-size: 12px; color: var(--dark); font-weight: 500; }
+  .cart-item-detail { font-size: 10px; color: var(--gold); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+  .cart-item-qty { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .remove-btn { background: none; border: none; color: var(--text-light); cursor: pointer; font-size: 18px; padding: 0 2px; }
+  .remove-btn:hover { color: #c0392b; }
+  .cart-empty { text-align: center; padding: 50px 20px; color: var(--text-light); }
+  .cart-empty .icon { font-size: 44px; margin-bottom: 14px; }
+  .cart-empty p { font-size: 12px; letter-spacing: 1px; }
+  .cart-backdrop { display: none; position: fixed; inset: 0; background: rgba(26,20,16,0.5); z-index: 250; }
+  .cart-backdrop.open { display: block; }
+
+  /* FORM */
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 5px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; border: 1px solid var(--border); padding: 9px 11px; font-family: 'Jost', sans-serif; font-size: 12px; color: var(--text); background: var(--cream); outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .address-field { display: none !important; }
+  .address-field.show { display: block !important; }
+  .submit-btn { width: 100%; background: var(--gold); color: var(--white); border: none; padding: 14px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+  .submit-btn:hover { background: #4a7a5a; }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .success-msg { display: none; background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 14px; text-align: center; font-size: 12px; margin-top: 10px; }
+  .success-msg.show { display: block; }
+
+  /* ADMIN PANEL */
+  #adminPanel { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 500; overflow-y: auto; }
+  .admin-topbar { background: var(--dark); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; flex-wrap: wrap; gap: 12px; }
+  .admin-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold-light); letter-spacing: 3px; }
+  .admin-title span { display: block; font-family: 'Jost', sans-serif; font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+  .admin-topbar-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .admin-topbar-btns button { padding: 8px 14px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border: none; }
+  .btn-green { background: var(--gold); color: #fff; }
+  .btn-outline { background: transparent; border: 1px solid rgba(141,186,158,0.4) !important; color: var(--gold-light); }
+  .admin-content { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+  .admin-filters { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+  .admin-filters input, .admin-filters select { border: 1px solid var(--border); padding: 9px 12px; font-family: 'Jost', sans-serif; font-size: 12px; background: #fff; outline: none; }
+  .admin-filters input { flex: 1; min-width: 180px; }
+  .admin-stats { font-size: 11px; color: var(--text-light); letter-spacing: 1px; white-space: nowrap; }
+  .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .admin-card { background: #fff; border: 1px solid var(--border); padding: 14px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 7px; position: relative; }
+  .admin-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(90,138,106,0.12); }
+  .admin-card.has-custom { border-color: var(--gold); }
+  .admin-badge { position: absolute; top: 6px; right: 6px; background: var(--gold); color: #fff; font-size: 9px; padding: 2px 6px; letter-spacing: 1px; text-transform: uppercase; }
+  .admin-card img { width: 80px; height: 80px; object-fit: contain; }
+  .admin-card-placeholder { width: 80px; height: 80px; background: var(--gold-pale); display: flex; align-items: center; justify-content: center; font-size: 30px; }
+  .admin-card-name { font-size: 10px; text-align: center; color: var(--text); line-height: 1.4; }
+  .admin-card-cat { font-size: 9px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
+  .admin-card-action { font-size: 10px; color: var(--text-light); }
+
+  /* Token Config */
+  .token-banner { background: #fff8e1; border: 1px solid #ffe082; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .token-banner span { font-size: 12px; color: #7a6000; flex: 1; min-width: 200px; }
+  .token-banner button { background: #f0a500; color: #fff; border: none; padding: 8px 14px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+
+  /* Edit modal extras */
+  .preview-box { text-align: center; margin: 14px 0; min-height: 120px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border); background: var(--cream); }
+  .preview-box img { max-width: 120px; max-height: 120px; object-fit: contain; }
+  .or-divider { text-align: center; color: var(--text-light); font-size: 11px; letter-spacing: 2px; margin: 10px 0; }
+  .edit-btns { display: flex; gap: 8px; margin-top: 12px; }
+  .btn-save { flex: 1; background: var(--dark); color: #fff; border: none; padding: 13px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .btn-save:hover { background: var(--gold); }
+  .btn-remove { flex: 0 0 auto; background: #fde8e8; color: #922; border: 1px solid #f5c6c6; padding: 10px 14px; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .saving-indicator { display: none; text-align: center; font-size: 12px; color: var(--gold); padding: 8px; letter-spacing: 1px; }
+  .saving-indicator.show { display: block; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--dark); color: #fff; padding: 12px 24px; font-family: 'Jost', sans-serif; font-size: 12px; z-index: 9999; letter-spacing: 1px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 600px) {
+    header { padding: 14px 16px; }
+    .logo { font-size: 20px; }
+    .main { padding: 20px 14px 60px; }
+    .modal { padding: 22px; }
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    .admin-topbar { padding: 14px 16px; }
+    .admin-content { padding: 20px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span>Doce Aroma</span>
+    <span class="logo-sub">By Cesar Mattos Perfumes</span>
+  </div>
+  <div class="header-btns">
+    <button class="admin-btn" onclick="openAdminLogin()">⚙ Admin</button>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Meu Pedido
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Catálogo de <em>Fragrâncias</em></h1>
+  <p>Essências · Perfumes · Ambiente</p>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('ambiente',this)">🌿 Essências de Ambiente</button>
+    <button class="tab" onclick="showTab('masculino',this)">👔 Perfumes Masculinos</button>
+    <button class="tab" onclick="showTab('feminino',this)">🌸 Perfumaria Feminina</button>
+    <button class="tab" onclick="showTab('compartilhavel',this)">✨ Compartilháveis</button>
+  </div>
+</div>
+
+<div class="main">
+  <div id="tab-ambiente" class="tab-panel active"><div id="ambiente-grid"></div></div>
+  <div id="tab-masculino" class="tab-panel"><div id="masculino-grid"></div></div>
+  <div id="tab-feminino" class="tab-panel"><div id="feminino-grid"></div></div>
+  <div id="tab-compartilhavel" class="tab-panel"><div id="compartilhavel-grid"></div></div>
+</div>
+
+<!-- PRODUTO MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2 id="modalProductName"></h2>
+    <p class="modal-subtitle" id="modalProductCategory"></p>
+    <div class="size-group">
+      <label class="group-label">Selecione o tamanho / tipo</label>
+      <div class="size-options" id="sizeOptions"></div>
+    </div>
+    <div class="qty-group">
+      <label>Quantidade</label>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <input type="number" class="qty-input" id="qtyInput" value="1" min="1">
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+    <button class="modal-add-btn" onclick="addToCart()">Adicionar ao Pedido</button>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="cart-backdrop" id="cartBackdrop" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>Meu Pedido</h3>
+    <button class="modal-close" style="color:#8dba9e" onclick="toggleCart()">×</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty"><div class="icon">🛍️</div><p>Seu pedido está vazio.<br>Escolha suas fragrâncias!</p></div>
+  </div>
+  <div class="cart-footer">
+    <div id="orderForm" style="display:none">
+      <hr class="divider">
+      <div class="form-group"><label>Seu nome completo *</label><input type="text" id="clientName" placeholder="Ex: Maria Silva"></div>
+      <div class="form-group"><label>Telefone / WhatsApp *</label><input type="text" id="clientPhone" placeholder="(11) 99999-9999"></div>
+      <div class="form-group">
+        <label>Tipo de entrega *</label>
+        <select id="deliveryType" onchange="toggleAddress()">
+          <option value="">Selecione...</option>
+          <option value="retirada">Retirada</option>
+          <option value="entrega">Entrega</option>
+        </select>
+      </div>
+      <div class="form-group address-field" id="addressField">
+        <label>Endereço completo *</label>
+        <textarea id="deliveryAddress" rows="3" placeholder="Rua, número, bairro, cidade..."></textarea>
+      </div>
+      <div class="form-group"><label>Observações (opcional)</label><input type="text" id="clientNotes" placeholder="Ex: presente, urgente..."></div>
+      <button class="submit-btn" id="submitBtn" onclick="submitOrder()">Enviar Pedido</button>
+      <div class="success-msg" id="successMsg">✅ Pedido enviado! Entraremos em contato em breve.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="adminLoginModal">
+  <div class="modal" style="max-width:360px">
+    <button class="modal-close" onclick="closeAdminLogin()">×</button>
+    <h2 style="font-size:20px">Área Admin</h2>
+    <p class="modal-subtitle">Gerenciar catálogo</p>
+    <div class="form-group"><label>Usuário</label><input type="text" id="adminUser" placeholder="admin"></div>
+    <div class="form-group"><label>Senha</label><input type="password" id="adminPass" placeholder="••••••" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
+    <div id="adminLoginErr" style="color:#c0392b;font-size:11px;margin-bottom:8px;display:none">Usuário ou senha incorretos.</div>
+    <button class="modal-add-btn" onclick="doAdminLogin()">Entrar</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="admin-topbar">
+    <div class="admin-title">Painel Admin <span>Doce Aroma — Gerenciar Imagens</span></div>
+    <div class="admin-topbar-btns">
+      <button class="btn-green" onclick="openTokenConfig()">🔑 Configurar Token GitHub</button>
+      <button class="btn-outline" onclick="closeAdmin()">← Voltar ao Site</button>
+    </div>
+  </div>
+  <div class="admin-content">
+    <div class="token-banner" id="tokenBanner" style="display:none">
+      <span>⚠️ Token GitHub não configurado. As imagens não serão salvas online sem ele.</span>
+      <button onclick="openTokenConfig()">Configurar Agora</button>
+    </div>
+    <div class="admin-filters">
+      <input id="adminSearch" oninput="renderAdminGrid()" type="text" placeholder="🔍 Buscar produto...">
+      <select id="adminFilter" onchange="renderAdminGrid()">
+        <option value="all">Todas as categorias</option>
+        <option value="masculino">Masculinos</option>
+        <option value="feminino">Femininos</option>
+        <option value="compartilhavel">Compartilháveis</option>
+        <option value="ambiente">Essências de Ambiente</option>
+      </select>
+      <div class="admin-stats" id="adminStats"></div>
+    </div>
+    <div class="admin-grid" id="adminGrid"></div>
+  </div>
+</div>
+
+<!-- TOKEN CONFIG MODAL -->
+<div class="modal-overlay" id="tokenModal">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeTokenModal()">×</button>
+    <h2 style="font-size:20px">Token GitHub</h2>
+    <p class="modal-subtitle">Salvo apenas neste navegador</p>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;line-height:1.6">
+      O token permite salvar as imagens no repositório <strong>mattosparfum/doce-aroma</strong> no GitHub.<br>
+      Ele fica salvo somente no seu navegador e nunca é enviado para ninguém.
+    </p>
+    <div class="form-group">
+      <label>GitHub Personal Access Token (ghp_...)</label>
+      <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+    </div>
+    <div id="tokenStatus" style="font-size:11px;margin-bottom:10px;display:none"></div>
+    <button class="modal-add-btn" onclick="saveToken()">💾 Salvar Token</button>
+    <button onclick="testToken()" style="width:100%;margin-top:8px;background:var(--gold-pale);color:var(--text);border:1px solid var(--border);padding:10px;font-family:Jost,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer">🧪 Testar Conexão</button>
+  </div>
+</div>
+
+<!-- ADMIN EDIT MODAL -->
+<div class="modal-overlay" id="adminEditModal">
+  <div class="modal" style="max-width:420px">
+    <button class="modal-close" onclick="closeAdminEdit()">×</button>
+    <h2 id="adminEditName" style="font-size:16px;line-height:1.4"></h2>
+    <p class="modal-subtitle" id="adminEditCat"></p>
+    <div class="preview-box" id="previewBox">
+      <span style="font-size:36px" id="previewEmoji">🖼️</span>
+    </div>
+    <div class="form-group">
+      <label>🔗 Colar link da imagem</label>
+      <input type="text" id="adminEditUrl" placeholder="https://..." oninput="previewFromUrl()">
+    </div>
+    <div class="or-divider">— ou —</div>
+    <div class="form-group">
+      <label>📁 Upload do computador</label>
+      <input type="file" id="adminEditFile" accept="image/*" onchange="previewFromFile()" style="border:1px solid var(--border);padding:8px;background:var(--cream);width:100%;font-family:Jost,sans-serif;font-size:11px">
+    </div>
+    <div class="saving-indicator" id="savingIndicator">⏳ Salvando no GitHub...</div>
+    <div class="edit-btns">
+      <button class="btn-save" onclick="saveAdminImage()">💾 Salvar</button>
+      <button class="btn-remove" onclick="removeAdminImage()">🗑 Remover</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// CONFIGURAÇÃO
+// ============================================================
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/SEU_SCRIPT_ID_AQUI/exec';
+const GITHUB_USER = 'mattosparfum';
+const GITHUB_REPO = 'doce-aroma';
+const GITHUB_IMAGES_FILE = 'imagens.json';
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'doceAroma2024';
+// ============================================================
+
+const ambienteData = {
+  "Herbais / Aromáticos": ["ALECRIM","ALFAZEMA (Lavanda)","ARRUDA","CAMOMILA","CAPIM LIMÃO","ERVA DOCE","EUCALIPTO","HORTELÃ","LAVANDA GLEIDE","LAVANDA LOCCITANE","LAVANDA M MARTAN","VERBENA"],
+  "Cítricos / Frescos": ["BERGAMOTA","LIMÃO SICILIANO"],
+  "Florais": ["FLOR DE ALGODÃO","FLOR DE CEREJEIRA","FLOR DE CRAVO","FLOR DE FIGO","FLOR DE LARANJEIRA","FLOR DE MARACUJÁ","JASMIN WHITE","ROSAS","CEREJEIRA FLOWERS"],
+  "Frutais": ["AMORA","CEREJA E AVELÃ","FRAMBOESA","JABUTICABA","MAÇÃ VERDE","MARACUJÁ","MELANCIA","MORANGO","MORANGO C/ CHAMP","PITANGA PRETA","PITAYA","ROMÃ","TUTTI FRUTTI"],
+  "Doces / Gourmand": ["BAUNILHA","CAFÉ","CAFÉ & MOUSSE","CANELA","CHOCOLATE","MEL","PANETONE","PIMENTA DOCE"],
+  "Amadeirados / Especiados / Resinosos": ["AMBAR ROMANCE","CEDRO","LÁDANO ESPANHA","MADEIRAS NOBRES","MIRRA ENCANTADA","PATCHOULY"],
+  "Verdes / Aquáticos / Clean": ["ALGAS","ALGODÃO","AQUA","BAMBU","BAMBU CHÁ BRANCO","CHÁ WHITE","CONFORTO","COTTON","LINHO","MARESIA FRESH","TALCO"],
+  "Inspirados em Marcas": ["ANY ANY","BABY VYA","BOBBY STORE","BRASIL RESORT","CARMEM STEFFENS","CASCAS E FOLHAS","CIDADE JARDIM","DANI FERNANDES","DASLU SWEET","DOWNY BRISA (ROSA)","DOWNY LÍRIOS (ROXO)","FARMA HOME","GIOVANNA BABY","IGUATEMI","JOHN JOHN","LENÇOL DE VENEZA","MAMY PLUS","MELISSINHA","MIAMI BEACH","MÁRCIA MELLO","NANA BABY","OSKLEN","PASSE BEM","PETIT TROUSSEAU","SEMENTES BRASILEIRAS","SIBERIAN","SWEET HOME","TROUSSEAU GOLD","TROUSSEAU HOME","VENTOS OSKLEN","VILA ROMA","VIVARA"]
+};
+
+const masculinoData = ["AL HARAMAIN - L'AVENTURE","ANIMALE - FOR MEN","ARMANI - ACQUA DI GIO","ARMANI - ACQUA DI GIO ABSOLUTA","ARMANI - ACQUA DI GIO PROFONDO","ARMANI - CODE FOR MEN","AZZARRO - POUR HOMME","AZZARRO - SILVER BLACK","AZZARRO - THE MOST WANTED","BVLGARI - MAN IN BLACK","BVLGARI - WOOD","CAROLINA HERRERA - BAD BOY","CAROLINA HERRERA - MEN","CH 212 - NYC","CH 212 - SEXY MEN","CH 212 - VIP BLACK","CH 212 - VIP BLACK ELIXIR","CH 212 - VIP MEN","CHANEL - ALLURE SPORT","CHANEL - BLEU","CREED - AVENTUS","DIOR - FAHRENHEIT","DIOR - SAUVAGE","DIOR - SAUVAGE ELIXIR","DOLCE & GABANNA - K","DOLCE & GABANNA - THE ONE","GIVENCHY - GENTLEMAN","HUGO BOSS - BOTTLED","HUGO BOSS - ELIXIR","HUGO BOSS - MARINE","ISSEY MIYAKE - LEAU D'SSEY POUR HOMME","JACQUES BOGART - SILVER SENT","JEAN PAUL GAULTIER - LE MALE","JEAN PAUL GAULTIER - LE MALE ELIXIR","JEAN PAUL GAULTIER - LE MALE LE PARFUM","JEAN PAUL GAULTIER - SCANDAL ABSOLU","JEAN PAUL GAULTIER - SCANDAL POUR HOMME","JEAN PAUL GAULTIER - ULTRAMALE","JO MALONE - WOOD SAGE & SEA SALT","JOOP! - HOMME","JOOP! - NIGHTFLIGHT","LATTAFA - ASAD","LATTAFA - ASAD BOURBON","LATTAFA - FAKHAR","LOUIS VUITTON - IMAGINATION","MONT BLANC - LEGEND","MONT BLANC - LEGEND SPIRIT","NISHANE - HACIVAT","O BOTICÁRIO - MALBEC","O BOTICÁRIO - MALBEC SIGNATURE","O BOTICÁRIO - ZAAD","PARFUM DE MARLY - PEGASUS","PARFUMS DE MARLY ALTHAIR","RABANNE - INVICTUS","RABANNE - INVICTUS ACQUA","RABANNE - INVICTUS VICTORY","RABANNE - ONE MILLION","RABANNE - ONE MILLION ELIXIR","RABANNE - ONE MILLION GOLD","RABANNE - ONE MILLION PRIVE","RABANNE - PHANTOM","RABANNE - PHANTOM PARFUM","RALPH LAUREN - POLO BLACK","RALPH LAUREN - POLO BLUE","RALPH LAUREN - POLO GREEN","RALPH LAUREN - POLO SPORT","SCUDERIA FERRARI - BLACK","VALENTINO - UOMO INTENSE","VERSACE - EROS","VERSACE - EROS ENERGY","VERSACE - EROS FLAME","VERSACE - POUR HOMME","YVES SAINT LAURENT - KOUROS","YVES SAINT LAURENT - MY SLF","YVES SAINT LAURENT - Y","BVLGARI - TYGAR"];
+
+const femininoData = ["AL WATANIAH - DURRAT AL AROOS","AL WATANIAH - SABAH AL WARD","ANIMALE - SEDUCTION FEMME","ARMANI - CODE FOR WOMEN","ARMANI - MY WAY","ARMANI - SI","BRITNEY SPEARS - FANTASY","BURBERRY - GODDESS","BURBERRY - HER","CACHAREL - AMOR AMOR","CACHAREL - LOU LOU","CACHAREL - YES I AM","CALVIN KLEIN - ETERNITY","CALVIN KLEIN - EUPHORIA","CALVIN KLEIN - WOMEN","CAROLINA HERRERA - CH FEMME","CAROLINA HERRERA - GOOD GIRL","CAROLINA HERRERA - GOOD GIRL BLUSH","CAROLINA HERRERA - GOOD GIRL LÉGÈRE","CAROLINA HERRERA - LA BOMBA","CAROLINA HERRERA - VERY GOOD GIRL","CH 212 - FEMME","CH 212 - SEXY","CH 212 - VIP FEMME","CH 212 - VIP ROSE","CH 212 - VIP ROSE ELIXIR","CHANEL - CHANCE","CHANEL - CHANCE FRAÎCHE","CHANEL - CHANCE TENDRE","CHANEL - COCO MADEMOISELLE","CHANEL - Nº5","CHLOÉ","CHLOÉ - NOMADE","CREED - QUEEN OF SILK","DIOR - HYPNOTIC POISON","DIOR - J'ADORE","DIOR - MISS DIOR CHÉRIE","DIOR - POISON GIRL","DIOR - MISS DIOR","DOLCE & GABBANA - LIGHT BLUE","DOLCE & GABBANA - Q","DOLCE & GABBANA - RED","GABRIELLA SABATINI","GIVENCHY - ANGE E DEMON","GIVENCHY - IRRESISTIBLE","GIVENCHY - L'INTERDIT","GUCCI - BLOOM","GUERLAIN - INSOLENCE","HUGO BOSS - DEEP RED","JEAN PAUL GAULTIER - CLASSIQUE","JEAN PAUL GAULTIER - CLASSIQUE INTENSE","JEAN PAUL GAULTIER - DIVINE","JEAN PAUL GAULTIER - LA BELLE","JEAN PAUL GAULTIER - SCANDAL BY NIGHT","JEAN PAUL GAULTIER - SCANDAL FEMME","JEAN PAUL GAULTIER - SCANDAL LE PARFUM","JO MALONE - ENGLISH PEAR AND FRESIA","LANCÔME - LA VIE EST BELLE","LANCÔME - LA VIE EST BELLE L'ECLAT","LATTAFA - FAKHAR ROSE","LATTAFA - HAYA","LATTAFA - YARA","LATTAFA - YARA CANDY","LATTAFA - YARA TOUS","MARINA DE BOURBON - ROUGE ROYAL","MUGLER - ALIEN","MUGLER - ALIEN GODDESS","MUGLER - ANGEL","MUGLER - ANGEL NOVA","NINA RICCI - VENUS","O BOTICÁRIO - ELYSEE","O BOTICÁRIO - HER CODE","O BOTICÁRIO - LILLY","PARFUMS DE MARLY - DELINA","PARFUMS DE MARLY - DELINA EXCLUISIF","PARFUMS DE MARLY - DELINA LA ROSE","PARFUMS DE MARLY - ORIANA","PARFUMS DE MARLY - VALAYA","PRADA - CANDY","PRADA - PARADOXE","RABANNE - FAME","RABANNE - LADY MILLION","RABANNE - MILLION GOLD","RABANNE - OLYMPEA","VERSACE - CRISTAL NOIR","VERSACE - DYLAN TURQUOISE","VICTORIA'S SECRET - BARE VANILLA","YVES SAINT LAURENT - BLACK OPIUM","YVES SAINT LAURENT - LIBRE"];
+
+const compartilhavelData = ["CALVIN KLEIN - BE","CALVIN KLEIN - ONE UNISSEX","HERMÈS - AGAR EBENE","JO MALONE - VELVET ROSE","KILLIAN - ANGEL'S SHARE","LATTAFA - BADEE AL OUD AMETHYST","LATTAFA - KHAMRAH","LATTAFA - MUSAMAM WHITE INTENSE","MAISON FRANCIS KURKDJIAN - BACCARAT ROUGE 540","ORIENTICA - ROYAL AMBER","PARFUM DE MARLY - LAYTON","SOSPIRO - VIBRATO","TOM FORD - TOBACCO VANILLE","XERJOFF - ERBA GOLD","XERJOFF - ERBA PURA","XERJOFF - ITÁLICA","XERJOFF - RENAISSANCE 1861"];
+
+const ambienteEmojis = {
+  "Herbais / Aromáticos": "🌿", "Cítricos / Frescos": "🍋", "Florais": "🌸",
+  "Frutais": "🍓", "Doces / Gourmand": "🍰", "Amadeirados / Especiados / Resinosos": "🪵",
+  "Verdes / Aquáticos / Clean": "💧", "Inspirados em Marcas": "✨"
+};
+
+const perfumeImageIds = {
+  // Masculinos
+  "AL HARAMAIN - L'AVENTURE": "1YQIx_OZzZgf_p-xnrLm0MbynPefQMQRA",
+  "ANIMALE - FOR MEN": "1f0lI8cOl2WsIeytOwA4lfusm9x0TkIFe",
+  "ARMANI - ACQUA DI GIO": "1Le43-1gVO369wzLyO1KzlDQTJNhD8o59",
+  "ARMANI - ACQUA DI GIO ABSOLUTA": "1Ma94bejpd1uYXOcfQalWjbVWR41P7ue-",
+  "ARMANI - ACQUA DI GIO PROFONDO": "1577Hfxi1Ddfuc0C7HVSedtKVN_lG24XZ",
+  "ARMANI - CODE FOR MEN": "1yxQM7p3OROntqVzju0aMoXVRI3iCWO8I",
+  "AZZARRO - POUR HOMME": "1Gehzb0cQ8txIc-zjyP94YLaopAVEc4Dw",
+  "AZZARRO - SILVER BLACK": "1F_a70GgcaDnipddptdFpjzgoILyHc5HV",
+  "AZZARRO - THE MOST WANTED": "1ttXZ9RXQj9YyT6NSqsY5xYF_YwvaiSJF",
+  "BVLGARI - MAN IN BLACK": "1FXdbUkuLGwRB0a44zmEGBBzDE0BKwZXo",
+  "BVLGARI - WOOD": "1FjILbIjrNrKmNu_CMPLocqZxuLePrCzX",
+  "BVLGARI - TYGAR": "16E2OfQUvRpJzpUOplljcfBQhUVeWkL-w",
+  "CAROLINA HERRERA - BAD BOY": "1RpWcoNqqcIR9IkaifurK_VoWxzUZqpKP",
+  "CAROLINA HERRERA - MEN": "1fjBb905EIG10t6KeGRVfE_Xbhl-0mCN1",
+  "CH 212 - NYC": "1fkVMkdK4qhmzwtPleNUqA_DryVafHigA",
+  "CH 212 - SEXY MEN": "1yR5AjxELfCN4ycbK183uXlVokqdd_cww",
+  "CH 212 - VIP BLACK": "13S0rcSn7PywfzAQhX8nhrplBWT9iFUI0",
+  "CH 212 - VIP BLACK ELIXIR": "1yJ2xhM4OIYxpZ1bfXB4e-NQniJXAtjmo",
+  "CH 212 - VIP MEN": "1jqCQKtoP5k3cFx2XR_jy9TZs8VYCd24b",
+  "CHANEL - ALLURE SPORT": "1zwTuDjxYa_00kOleiOXLh_jIbeV6Ycwr",
+  "CHANEL - BLEU": "1_LRqjUtHaOb_JSAjr1kEmZp5tVGrBVMt",
+  "CREED - AVENTUS": "19odE8vVbxnyviH5HNDXsJFLKIGGnDO7H",
+  "DIOR - FAHRENHEIT": "1baymfaTubSkV4dYWqgPVD9kD3udKzqBE",
+  "DIOR - SAUVAGE": "18wIyUlxXCU3I__Q8-IITXV49XmxHZIZf",
+  "DIOR - SAUVAGE ELIXIR": "1_Pt-sMYMF1XaKcEmI1n3S08pJjxFLDc4",
+  "DOLCE & GABANNA - K": "1Hgqoq4EnoYwGfxoKAN5wiE7Nx0mXC1rG",
+  "DOLCE & GABANNA - THE ONE": "19JJ79_eq8jvUIUcst392aRrzVI-EI_TW",
+  "GIVENCHY - GENTLEMAN": "1haKuVWWDdsFl6mHvtg_cFn_T_tCiNcCh",
+  "HUGO BOSS - BOTTLED": "1MkG3N2HQRWu32kCC3R5NdsfRXIkjlRqc",
+  "HUGO BOSS - ELIXIR": "",
+  "HUGO BOSS - MARINE": "",
+  "ISSEY MIYAKE - LEAU D'SSEY POUR HOMME": "1IPQiLY2Rtz7IPjn98mbEv2cU8YfHJJO8",
+  "JACQUES BOGART - SILVER SENT": "1uiGijPi-fq_M9MFSsGudQ2evMgGyt9VD",
+  "JEAN PAUL GAULTIER - LE MALE": "1KImYmhFtUG9Zmp-DQfdyofJ6zAtAatww",
+  "JEAN PAUL GAULTIER - LE MALE ELIXIR": "1qcueAm5XXG4n8hmCz83dPa9K78dBUfA4",
+  "JEAN PAUL GAULTIER - LE MALE LE PARFUM": "1H6Fwz9wjwL7I4qMSFfvKrCsQps-Hu2Tn",
+  "JEAN PAUL GAULTIER - SCANDAL ABSOLU": "1Bw682bBF6C5qLSUKUK3snxh98yRNCfDR",
+  "JEAN PAUL GAULTIER - SCANDAL POUR HOMME": "1fttTdmGmBqX8zjb7hT8AMxlV227n6gMd",
+  "JEAN PAUL GAULTIER - ULTRAMALE": "1poz9VSjl5jk_mRXvRH6sX51Z94K9B2fd",
+  "JO MALONE - WOOD SAGE & SEA SALT": "1fQzU7cVj6Wg4Dv-4oxTeWKrNba4OsAK6",
+  "JOOP! - HOMME": "1Ll7i4WuFepfFVryrYhfDMFBCLXEcEDoS",
+  "JOOP! - NIGHTFLIGHT": "12smPldrDepU-PGsdn9-_mH2Ftr7tilox",
+  "LATTAFA - ASAD": "1yhRE5AILL5XGIJKwujQTuXyyM_mSldKM",
+  "LATTAFA - ASAD BOURBON": "1viY1BKGXjdvsOoXY2Ex4lLq0IfYtCbDY",
+  "LATTAFA - FAKHAR": "1mVo5LnrQ13-EfijWwoc8B2_K97I9IBw1",
+  "LOUIS VUITTON - IMAGINATION": "13CdCBL1fpsJlQlYFfr-nImPXwM7IVbHU",
+  "MONT BLANC - LEGEND": "1_qmMoljkhlQWKHfJeMcW9Xt90Emp6yTX",
+  "MONT BLANC - LEGEND SPIRIT": "1wjiO_fHpdKF0oipjpDyX2pfV_3CrUxyN",
+  "NISHANE - HACIVAT": "1qtZ7ROmq-3MoKlZ_K--1nG4bV1AU1LQ5",
+  "O BOTICÁRIO - MALBEC": "1adJGLMrwa2_N6DB-jkVqz4W6CMxlzF5q",
+  "O BOTICÁRIO - MALBEC SIGNATURE": "1Mb8WuUa6LOl5DW4eabk_g3dLO1Y3BATZ",
+  "O BOTICÁRIO - ZAAD": "19Sw48rKXNDkZ4yzPpu2B5EE1OtU8EdAC",
+  "PARFUM DE MARLY - PEGASUS": "1EuG1OPZhrNUeELg0m7IndHM-avbMcNFM",
+  "PARFUMS DE MARLY ALTHAIR": "1EHQMiOk-btYM_t9XhLrDb4POlURes1ln",
+  "RABANNE - INVICTUS": "1MJhl-zmBFncGkNnFfNgnYCZegGqc_HSx",
+  "RABANNE - INVICTUS ACQUA": "1Syp68-2eiHFLbxRb4n6BbtFSWDWkGj8q",
+  "RABANNE - INVICTUS VICTORY": "1HVB2h9swtl6KtpzmX62lINO5L8InZ96r",
+  "RABANNE - ONE MILLION": "1wwhHPWsxYCnPhUzkNFpGPnKZtwi7JUFy",
+  "RABANNE - ONE MILLION ELIXIR": "1CIFjAaJKsR84uLmoPcw-SRym0Gf80eXq",
+  "RABANNE - ONE MILLION GOLD": "1stF6-F8BMgZ71VzJj6FJn5XCEKdo2lM2",
+  "RABANNE - ONE MILLION PRIVE": "1mJPywlqmAO3YVeiqUGoCPAHw_E7lXhLV",
+  "RABANNE - PHANTOM": "1uUh_jcDsUR59U0VchOLaswitkiGXTbl_",
+  "RABANNE - PHANTOM PARFUM": "1XT6ZLyn3BmoKb9BptBmwxd2UypenR_AQ",
+  "RALPH LAUREN - POLO BLACK": "19IpVkyUVu-y4ITlPcjUI_wbm-KVap6zy",
+  "RALPH LAUREN - POLO BLUE": "1gZdi3MkoODPpS4O5znDz_kQY43C0AHSo",
+  "RALPH LAUREN - POLO GREEN": "1HLruU0NvssckIXNsCL1-NnIQGzwEkZ4K",
+  "RALPH LAUREN - POLO SPORT": "1vdj4k4rN-oGVMN-XvdkSLPVx2cUQZ6kt",
+  "SCUDERIA FERRARI - BLACK": "18V-Z6sJ1o2eBHJj1OWKKQ0nYzag2tO_y",
+  "VALENTINO - UOMO INTENSE": "1lqVAo5M8ojSQoMu5uxu2OxZ6jaKoaNCt",
+  "VERSACE - EROS": "1_8eJDdNLQA3SFgZvzoaioxvrefkqIp89",
+  "VERSACE - EROS ENERGY": "1wJTprpnIm3dV6UsGMsnlrs-_3ENYID94",
+  "VERSACE - EROS FLAME": "1R7U9oyGFrYz_iRI7ZwbKBrqJl-SVbPBy",
+  "VERSACE - POUR HOMME": "1cmcbQe8BUOZowViYKwvSu855UhWJ5001",
+  "YVES SAINT LAURENT - KOUROS": "1QZqi_X0WAkK47ADozHkeTsdWXdi8HY6C",
+  "YVES SAINT LAURENT - MY SLF": "1vKvT4kP98aM0udMabwEQUXmiyXEW0U3n",
+  "YVES SAINT LAURENT - Y": "1ZlIy8Z06KM-lRFLVJzd8vyEZNKZBxvwQ",
+  // Femininos
+  "AL WATANIAH - DURRAT AL AROOS": "15wtWzoQLPNGiTSx3Hf3qFmDxBMmMnLn9",
+  "AL WATANIAH - SABAH AL WARD": "1U6J5GLCEivlaVKdlrAz51-g-pejjQbFl",
+  "ANIMALE - SEDUCTION FEMME": "12KzM7AFoAZSwLIOT7tzxFfGlo2enwmVJ",
+  "ARMANI - CODE FOR WOMEN": "1qEI8OrVlB5iQu40X_dMQDpgq2QMn7nKF",
+  "ARMANI - MY WAY": "1jSofuF7_6zOu07Mg3Hz3LxeqJuQdg55m",
+  "ARMANI - SI": "1vf2E8cPvdr8FSroTFjIbrrZDIEwvAGoz",
+  "BRITNEY SPEARS - FANTASY": "1lGsdAKW7tJZHpOqxT8nWdHJ0n-HRzjGh",
+  "BURBERRY - GODDESS": "1HAbpXrAAZBdo9VFZNL7wLPnD9FeHUSGj",
+  "BURBERRY - HER": "1N_-hPSDxbpCVGw36Xh2kP-MKTsIxNw1M",
+  "CACHAREL - AMOR AMOR": "1nsPj2zRQdGejmFtGvxI6XNkkoDeMbjOe",
+  "CACHAREL - LOU LOU": "1rpED9f-FArJRiiEEXaWKzTvfruV0ECuw",
+  "CACHAREL - YES I AM": "1dytNQQq-eOmawG0W3PbiCym165cnxaai",
+  "CALVIN KLEIN - ETERNITY": "1jwN50gXvnnN7WbbnhEwWV3qQoS1GmQo4",
+  "CALVIN KLEIN - EUPHORIA": "1PLR1ML5S79mOxEZyqkOjOex4vecYtA7P",
+  "CALVIN KLEIN - WOMEN": "1IvRDTmLRdJmU6XauG0NllXmYwNhqOku6",
+  "CAROLINA HERRERA - CH FEMME": "1BB7kfUt9cHrJ6zBPjzPAitrvgDhcANHM",
+  "CAROLINA HERRERA - GOOD GIRL": "1dYqOChFiUTLu0NM1Dj4zN5qgtK_I9u30",
+  "CAROLINA HERRERA - GOOD GIRL BLUSH": "1633qfA7do-ItXr8eZkKApCPTEriQpcVC",
+  "CAROLINA HERRERA - GOOD GIRL LÉGÈRE": "1PEL14PjlB572iUyELaFGMELxClVN8UrV",
+  "CAROLINA HERRERA - LA BOMBA": "1jNgCDAKE19sWWz7bwmdgn5pJMkuSivJ6",
+  "CAROLINA HERRERA - VERY GOOD GIRL": "1ue5DkC17lUEGNuzQYGtftKbE8FK-lcda",
+  "CH 212 - FEMME": "1o_IiPCp-92011g55-JO2WfASAE8D2ytz",
+  "CH 212 - SEXY": "16WziqbmQakRqeeV1cxt2bTHfSe5HfqP6",
+  "CH 212 - VIP FEMME": "1NVmAWkePe2YGRdpIAYJ_ztIR790Mvc9h",
+  "CH 212 - VIP ROSE": "1ymmgbewZ6eyGCGs5LZWwYTcOLMfqVm18",
+  "CH 212 - VIP ROSE ELIXIR": "16MVqwDVwy0VtAk-Z9IvB8XeZQB0YG03C",
+  "CHANEL - CHANCE": "1tN62Mglw6rqcCdPmhpQK4vdB0JzTYbkk",
+  "CHANEL - CHANCE FRAÎCHE": "19C3okxvgojBheonGg32Qtc-pz649fsWl",
+  "CHANEL - CHANCE TENDRE": "1PcVbAKDs90P6IyafpgyWsC8AsbK_uPIb",
+  "CHANEL - COCO MADEMOISELLE": "1J2WFmyF7kRPbbtccpXhNXApRo5y-MsVw",
+  "CHANEL - Nº5": "13ahQhkAHdImV106V7sxIqAnj4QdhBDpb",
+  "CHLOÉ": "1nkMd62nPRYHjMepG2ZIFTKn2ZSsrgrSP",
+  "CHLOÉ - NOMADE": "1D-ZwZiuSf-_VTkPsQrm-PKGK7GTSrcDF",
+  "CREED - QUEEN OF SILK": "1zLQ66TAms05XXu0fO8jh3tVwdnPIiYxt",
+  "DIOR - HYPNOTIC POISON": "1A3zAnLpN85l7s0OdaCetLIooKjcp238k",
+  "DIOR - J'ADORE": "1xudeM0Wh-Edj9_sYHhdQDf-L9cbjV7wU",
+  "DIOR - MISS DIOR CHÉRIE": "1uU2zg-qkNU0_-MVYB1BQpWOFtBZYuEkK",
+  "DIOR - POISON GIRL": "1_dyjfrabv25V1bZsIb8d3KKKnjR78EYO",
+  "DIOR - MISS DIOR": "1xEAx337-u37m2A9-5eycRzXAdAntNcLo",
+  "DOLCE & GABBANA - LIGHT BLUE": "1flo4j5PoIEMLa_l2d2doZRyxDjIZuHb4",
+  "DOLCE & GABBANA - Q": "1F2qqkptUktogkNPSyuvS6StFCzBdD2C7",
+  "DOLCE & GABBANA - RED": "1UzXrqHhZ-pIJVOagWh5cz9jOeRtPXicb",
+  "GABRIELLA SABATINI": "1F6cnZDOoqZTll5Jb9vU2m5ynttbeH2ve",
+  "GIVENCHY - ANGE E DEMON": "1ES3xB3_XqKNCZT8jjvdggpT99S-FseRI",
+  "GIVENCHY - IRRESISTIBLE": "1B-mM4e-BUJCr6UfqpKkcRyY_yd2ED5PN",
+  "GIVENCHY - L'INTERDIT": "1nVGco90aQbIdKRcwQJsKe6YXs1UpzrwZ",
+  "GUCCI - BLOOM": "1e5mBxVL87pcdxK6-xCUQOQPm0rAw7J5R",
+  "GUERLAIN - INSOLENCE": "14RCD-c88aLtSCPn1pZWdQOK-F3SS-JkD",
+  "HUGO BOSS - DEEP RED": "1p_Ery6waMk1NkrxVBRRzvnnqKnf2-77h",
+  "JEAN PAUL GAULTIER - CLASSIQUE": "1HOjGh1yjsg4njnOtvLFxY13L9VpiFnXF",
+  "JEAN PAUL GAULTIER - CLASSIQUE INTENSE": "1SiVCvvYfezGA4M2MlZDoe6ZDWqXoPncq",
+  "JEAN PAUL GAULTIER - DIVINE": "1mIVEjnhUl3m7Xpk-KU4qnQSAFcCkvyra",
+  "JEAN PAUL GAULTIER - LA BELLE": "1BXgev4zbUPwze9uGwM5qBbcY5XYYfmNf",
+  "JEAN PAUL GAULTIER - SCANDAL BY NIGHT": "1l7-SOVMPt4gCcg_qQAw7pPg1lFjDAeXq",
+  "JEAN PAUL GAULTIER - SCANDAL FEMME": "1w2wvOIgEFDpZmMQxfpL0dKOaOYo7OuSD",
+  "JEAN PAUL GAULTIER - SCANDAL LE PARFUM": "1GP-t1EcaIPhFQnTDXE1xDtjLuNsZEc3H",
+  "JO MALONE - ENGLISH PEAR AND FRESIA": "1rL0cKjr5ae5HfOtt9lIjJKMBhl9AEaq3",
+  "LANCÔME - LA VIE EST BELLE": "1L7HMSTCSOjJewSr-o1bv1EZ0i585ipYr",
+  "LANCÔME - LA VIE EST BELLE L'ECLAT": "1C2j254-rSOxqKAcjPn6t2FIieswtcBVL",
+  "LATTAFA - FAKHAR ROSE": "1srBOZtJqQm_VvWm9bn8oUTOPeYTSG4jZ",
+  "LATTAFA - HAYA": "1IpJaRFeM4FXePJMhDuhMHN-aQH9P7Zbv",
+  "LATTAFA - YARA": "1IlmBnVwewwGkfUqwYb6zW5xhu9RAuquU",
+  "LATTAFA - YARA CANDY": "1VNdNwJ79yQZ6rXC6g4pWsTIk1781uR3v",
+  "LATTAFA - YARA TOUS": "1pMC-ENV-aSf9sex_G2UxrIBHi0Yw8ZYk",
+  "MARINA DE BOURBON - ROUGE ROYAL": "1mI5WnPBejjL3WRzOidAamq4PNEhfm1Nb",
+  "MUGLER - ALIEN": "1wcLQ52ywGXZwszZmtiZTjcDt5LtUEc79",
+  "MUGLER - ALIEN GODDESS": "1P3XNVOAQSX88qBCFqpo5iQLykdF2V8Dz",
+  "MUGLER - ANGEL": "1FtHMpq9mDk0R_G_3D-li8XgHRuSPCgy4",
+  "MUGLER - ANGEL NOVA": "1wgp9dz3x1j3hCkdmXxVzEzvtDIJlv8Nj",
+  "NINA RICCI - VENUS": "1qgto7n0haxuH2v61PNMGCO0YWoongsH3",
+  "O BOTICÁRIO - ELYSEE": "1_BNrxVHX8VmLGZGHpP4B9Tkfj7IUi5yg",
+  "O BOTICÁRIO - HER CODE": "1yw9BLgwdu_xMS4FMboaZbX6a7h0akE6N",
+  "O BOTICÁRIO - LILLY": "1xXt7kYosCb0HBR6R2JJIYUO6sh-DJfvA",
+  "PARFUMS DE MARLY - DELINA": "15u69YAlKrc9amJn2ZY4jwqnNqa7Lu_3c",
+  "PARFUMS DE MARLY - DELINA EXCLUISIF": "11g7ULZK53gmaUzqY_h8Y667Th0-ArsvL",
+  "PARFUMS DE MARLY - DELINA LA ROSE": "1TT-yCX52F6M6bnOf3OcCYlhQZ_9jPtR8",
+  "PARFUMS DE MARLY - ORIANA": "1KJNmrV_aohX0pFla3GfLoYeEggIMPtec",
+  "PARFUMS DE MARLY - VALAYA": "1axkh6bKnjSdMriuG4LDj27LZ1XmrFgmX",
+  "PRADA - CANDY": "1F_hGzczcSL5sSZ0rnMXYz2Zxfc_XOUf8",
+  "PRADA - PARADOXE": "1zNVXO-cDUW4-pna3JFmg78g1450KEZRP",
+  "RABANNE - FAME": "1CS3pSEbnnEo8VcP3pSGA8weTHarITpKr",
+  "RABANNE - LADY MILLION": "1_waykaOVDjTBSUsvu4gohnyQwGhw1P3x",
+  "RABANNE - MILLION GOLD": "12pXIwzBBUgEXqvik8mVd6J44egSqumRJ",
+  "RABANNE - OLYMPEA": "14xRfQgKxKrQ5tmCEpUotHFKUtZ75n85B",
+  "VERSACE - CRISTAL NOIR": "1vyGaqEft_3D-VIBE-Lrn2JdiXclOCdMR",
+  "VERSACE - DYLAN TURQUOISE": "1pyR1IIkmwqXxczmXw7NVXldSABXz8HwY",
+  "VICTORIA'S SECRET - BARE VANILLA": "18PaMlGYNScYavaXb_TdvKCOM7EwqBwix",
+  "YVES SAINT LAURENT - BLACK  OPIUM": "1O8ALCTU7e5aJ_ugme6xNZRNCfDICPCbv",
+  "YVES SAINT LAURENT - BLACK OPIUM": "1O8ALCTU7e5aJ_ugme6xNZRNCfDICPCbv",
+  "YVES SAINT LAURENT - LIBRE": "1dHPYGUdduXr83qIpY0EcGEFsdYCDqgMo",
+  // Compartilháveis
+  "CALVIN KLEIN - BE": "1LEG_PvoLyqsnnN4hL64m7pzxQ65HfcBi",
+  "CALVIN KLEIN - ONE UNISSEX": "1S9S1SKq4gsTiKEg9EoqApAuW346kyvGF",
+  "HERMÈS - AGAR EBENE": "1WqZgr3dGxGnFpf1rAo1LMnIyU_--MHWK",
+  "JO MALONE - VELVET ROSE": "1nPT-8tNfUwHeZ0JUML4IykjiF2Ot6ua8",
+  "KILLIAN - ANGEL'S SHARE": "1yYI1ErXbzioNZqLijjHNsG6QzY0Y3ESO",
+  "LATTAFA - BADEE AL OUD AMETHYST": "18sO26wJy1hYU60jcrrPLYZRQ1MRyQ_bf",
+  "LATTAFA - KHAMRAH": "1oL4bGxv0I7EkDNbTPXDWUARHRdjXqMEp",
+  "LATTAFA - MUSAMAM WHITE INTENSE": "1uNQAZIxupL9Z-eJKzWskGEdYTGcQNpPx",
+  "MAISON FRANCIS KURKDJIAN - BACCARAT ROUGE 540": "1NxAozMsI9BIRNMj3cOy6NWFN8ghO7iwn",
+  "ORIENTICA - ROYAL AMBER": "1QgVPZ7O3JG_mnNcjS-hA4Hf3u7LNhSt8",
+  "PARFUM DE MARLY - LAYTON": "1whcMuQ-SWYnU7HCbVb8Z4bYY76IQ7zSh",
+  "SOSPIRO - VIBRATO": "18Km_eGP3_ycuh9j7NKbz_MOoYOengaTr",
+  "TOM FORD - TOBACCO VANILLE": "1JGnGIYxaXNxjjKUEMb0LoB_6bG5vyBhn",
+  "XERJOFF - ERBA GOLD": "1aUj4tqKtoEL_kOj5wwbyWVk7UCmBerIp",
+  "XERJOFF - ERBA PURA": "13AJOBeVB-2utZC2-wEjHg6aTjrOU5YuX",
+  "XERJOFF - ITÁLICA": "1rUJmBi6KEXwkXEb0y9p4IkgwU8XLIIIB",
+  "XERJOFF - RENAISSANCE 1861": "13eWR9a9MUQ9F_ZtdnXe41fjD2NHJQmVc"
+};
+
+
+// ============================================================
+// GITHUB IMAGE STORAGE
+// ============================================================
+function getToken() { return localStorage.getItem('doceAroma_ghToken') || ''; }
+function setToken(t) { localStorage.setItem('doceAroma_ghToken', t); }
+
+// Cache local das imagens carregadas do GitHub
+let imageCache = {};
+let imageSHA = '';
+
+async function loadImagesFromGitHub() {
+  try {
+    const token = getToken();
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (token) headers['Authorization'] = 'token ' + token;
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_IMAGES_FILE}`, { headers });
+    if (res.status === 404) { imageCache = {}; return; }
+    if (!res.ok) return;
+    const data = await res.json();
+    imageSHA = data.sha;
+    const decoded = atob(data.content.replace(/\n/g, ''));
+    imageCache = JSON.parse(decoded);
+  } catch(e) { imageCache = {}; }
+}
+
+async function saveImagesToGitHub() {
+  const token = getToken();
+  if (!token) { showToast('⚠️ Configure o Token GitHub primeiro!'); return false; }
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(imageCache, null, 2))));
+  const body = { message: 'Atualiza imagens catálogo', content };
+  if (imageSHA) body.sha = imageSHA;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_IMAGES_FILE}`, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) { const err = await res.json(); showToast('❌ Erro: ' + (err.message || 'Verifique o token')); return false; }
+    const data = await res.json();
+    imageSHA = data.content.sha;
+    return true;
+  } catch(e) { showToast('❌ Erro de conexão'); return false; }
+}
+
+function getProductImage(name) {
+  if (imageCache[name]) return imageCache[name];
+  const id = perfumeImageIds[name];
+  if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w200`;
+  return null;
+}
+
+// ============================================================
+// CATALOG RENDER
+// ============================================================
+function getAmbienteImageUrl(name) {
+  const map = { ALECRIM:'rosemary,herb', ALFAZEMA:'lavender,flower', CAMOMILA:'chamomile,flower', 'CAPIM':'lemongrass', EUCALIPTO:'eucalyptus', HORTELÃ:'mint,herb', LAVANDA:'lavender', VERBENA:'verbena', BERGAMOTA:'bergamot', LIMÃO:'lemon,citrus', ROSA:'rose,flower', AMORA:'blackberry', FRAMBOESA:'raspberry', MELANCIA:'watermelon', MORANGO:'strawberry', BAUNILHA:'vanilla', CAFÉ:'coffee', CANELA:'cinnamon', CHOCOLATE:'chocolate', CEDRO:'cedar,wood', BAMBU:'bamboo' };
+  const key = Object.keys(map).find(k => name.toUpperCase().includes(k));
+  return `https://source.unsplash.com/100x100/?${key ? map[key] : 'aromatherapy'}&sig=${encodeURIComponent(name)}`;
+}
+
+function renderAmbiente() {
+  const container = document.getElementById('ambiente-grid');
+  let html = '';
+  for (const [cat, items] of Object.entries(ambienteData)) {
+    html += `<div class="category-section"><div class="category-title">${ambienteEmojis[cat]||''} ${cat}</div><div class="products-grid">`;
+    items.forEach(name => {
+      const img = getProductImage(name) || getAmbienteImageUrl(name);
+      html += `<div class="product-card" onclick="openModal('${esc(name)}','Essência de Ambiente','ambiente')" id="card-${esc2(name)}">
+        <img class="product-img" src="${img}" alt="${esc(name)}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="product-img-placeholder" style="display:none">${ambienteEmojis[cat]||'🌿'}</div>
+        <div class="product-name">${name}</div>
+        <button class="add-btn">+ Adicionar</button>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderPerfumes(data, containerId, categoryLabel, emoji) {
+  const container = document.getElementById(containerId);
+  let html = `<div class="category-section"><div class="products-grid">`;
+  data.forEach(name => {
+    const img = getProductImage(name);
+    html += `<div class="product-card" onclick="openModal('${esc(name)}','${categoryLabel}','perfume')" id="card-${esc2(name)}">
+      ${img ? `<img class="product-img" src="${img}" alt="${esc(name)}" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><div class="product-img-placeholder" style="display:none">${emoji}</div>` : `<div class="product-img-placeholder">${emoji}</div>`}
+      <div class="product-name">${name}</div>
+      <button class="add-btn">+ Adicionar</button>
+    </div>`;
+  });
+  html += `</div></div>`;
+  container.innerHTML = html;
+}
+
+function esc(s) { return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+function esc2(s) { return String(s).replace(/[^a-zA-Z0-9]/g,'_'); }
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tab, el) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ============================================================
+// PRODUCT MODAL
+// ============================================================
+let currentProduct = null;
+
+function openModal(name, category, type) {
+  currentProduct = { name, category, type };
+  document.getElementById('modalProductName').textContent = name;
+  document.getElementById('modalProductCategory').textContent = category;
+  const sizeOptions = document.getElementById('sizeOptions');
+  sizeOptions.innerHTML = '';
+  const sizes = type === 'ambiente' ? ['Refil','Borrifador','Aromatizador'] : ['50ml','100ml','Creme Hidratante'];
+  sizes.forEach((s,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'size-option' + (i===0?' selected':'');
+    btn.textContent = s;
+    btn.onclick = () => { document.querySelectorAll('.size-option').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); };
+    sizeOptions.appendChild(btn);
+  });
+  document.getElementById('qtyInput').value = 1;
+  document.getElementById('productModal').classList.add('open');
+}
+function closeModal() { document.getElementById('productModal').classList.remove('open'); }
+document.getElementById('productModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+function changeQty(d) { const i = document.getElementById('qtyInput'); i.value = Math.max(1, parseInt(i.value||1)+d); }
+
+// ============================================================
+// CART
+// ============================================================
+let cart = [];
+
+function addToCart() {
+  const sel = document.querySelector('.size-option.selected');
+  if (!sel) { alert('Selecione um tamanho!'); return; }
+  const qty = parseInt(document.getElementById('qtyInput').value)||1;
+  const item = { id: currentProduct.name+'|'+sel.textContent, name: currentProduct.name, category: currentProduct.category, size: sel.textContent, qty };
+  const ex = cart.find(c=>c.id===item.id);
+  if (ex) ex.qty += qty; else cart.push(item);
+  closeModal();
+  updateCartUI();
+  const card = document.getElementById('card-'+esc2(currentProduct.name));
+  if (card) card.classList.add('in-cart');
+}
+
+function removeFromCart(id) { cart = cart.filter(c=>c.id!==id); updateCartUI(); }
+
+function updateCartUI() {
+  const count = cart.reduce((a,c)=>a+c.qty,0);
+  document.getElementById('cartCount').textContent = count;
+  const body = document.getElementById('cartBody');
+  const formDiv = document.getElementById('orderForm');
+  if (cart.length===0) {
+    body.innerHTML = `<div class="cart-empty"><div class="icon">🛍️</div><p>Seu pedido está vazio.<br>Escolha suas fragrâncias!</p></div>`;
+    formDiv.style.display = 'none'; return;
+  }
+  body.innerHTML = cart.map(item => `<div class="cart-item">
+    <div class="cart-item-info">
+      <div class="cart-item-name">${item.name}</div>
+      <div class="cart-item-detail">${item.size}</div>
+      <div class="cart-item-qty">Qtd: ${item.qty}</div>
+    </div>
+    <button class="remove-btn" onclick="removeFromCart('${esc(item.id)}')">×</button>
+  </div>`).join('');
+  formDiv.style.display = 'block';
+}
+
+function toggleCart() {
+  document.getElementById('cartPanel').classList.toggle('open');
+  document.getElementById('cartBackdrop').classList.toggle('open');
+}
+
+function toggleAddress() {
+  const t = document.getElementById('deliveryType').value;
+  const f = document.getElementById('addressField');
+  if (f) f.classList.toggle('show', t==='entrega');
+}
+
+async function submitOrder() {
+  const name = document.getElementById('clientName').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+  const delivery = document.getElementById('deliveryType').value;
+  const address = document.getElementById('deliveryAddress').value.trim();
+  const notes = document.getElementById('clientNotes').value.trim();
+  if (!name) { alert('Informe seu nome.'); return; }
+  if (!phone) { alert('Informe seu telefone.'); return; }
+  if (!delivery) { alert('Selecione o tipo de entrega.'); return; }
+  if (delivery==='entrega' && !address) { alert('Informe o endereço.'); return; }
+  if (cart.length===0) { alert('Adicione itens ao pedido.'); return; }
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  const payload = {
+    nome: name, telefone: phone,
+    tipoEntrega: delivery==='entrega'?'Entrega':'Retirada',
+    endereco: address||'—',
+    itens: cart.map(i=>`${i.name} (${i.size}) x${i.qty}`).join('; '),
+    observacoes: notes||'—',
+    data: new Date().toLocaleString('pt-BR')
+  };
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    document.getElementById('successMsg').classList.add('show');
+    cart = []; updateCartUI();
+    ['clientName','clientPhone','clientNotes','deliveryAddress'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('deliveryType').value='';
+    document.getElementById('addressField').classList.remove('show');
+    document.querySelectorAll('.product-card').forEach(c=>c.classList.remove('in-cart'));
+  } catch(e) { alert('Erro ao enviar. Tente novamente.'); }
+  btn.disabled=false; btn.textContent='Enviar Pedido';
+}
+
+// ============================================================
+// ADMIN LOGIN
+// ============================================================
+function openAdminLogin() {
+  document.getElementById('adminLoginModal').classList.add('open');
+  setTimeout(()=>document.getElementById('adminUser').focus(),100);
+}
+function closeAdminLogin() {
+  document.getElementById('adminLoginModal').classList.remove('open');
+  document.getElementById('adminLoginErr').style.display='none';
+}
+function doAdminLogin() {
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  if (u===ADMIN_USER && p===ADMIN_PASS) { closeAdminLogin(); openAdmin(); }
+  else { document.getElementById('adminLoginErr').style.display='block'; }
+}
+document.getElementById('adminLoginModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeAdminLogin(); });
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+async function openAdmin() {
+  document.getElementById('adminPanel').style.display='block';
+  document.getElementById('adminSearch').value='';
+  document.getElementById('adminFilter').value='all';
+  // Show token banner if no token
+  const hasToken = !!getToken();
+  document.getElementById('tokenBanner').style.display = hasToken ? 'none' : 'flex';
+  showToast('⏳ Carregando imagens...');
+  await loadImagesFromGitHub();
+  renderAdminGrid();
+  showToast('✅ Imagens carregadas!');
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').style.display='none';
+  renderAmbiente();
+  renderPerfumes(masculinoData,'masculino-grid','Perfume Masculino','👔');
+  renderPerfumes(femininoData,'feminino-grid','Perfume Feminino','🌸');
+  renderPerfumes(compartilhavelData,'compartilhavel-grid','Perfume Compartilhável','✨');
+}
+
+function getAllProducts() {
+  const all = [];
+  masculinoData.forEach(n=>all.push({name:n,category:'masculino',label:'Perfume Masculino',emoji:'👔'}));
+  femininoData.forEach(n=>all.push({name:n,category:'feminino',label:'Perfume Feminino',emoji:'🌸'}));
+  compartilhavelData.forEach(n=>all.push({name:n,category:'compartilhavel',label:'Compartilhável',emoji:'✨'}));
+  for (const [cat,items] of Object.entries(ambienteData)) items.forEach(n=>all.push({name:n,category:'ambiente',label:cat,emoji:ambienteEmojis[cat]||'🌿'}));
+  return all;
+}
+
+function renderAdminGrid() {
+  const search = (document.getElementById('adminSearch').value||'').toLowerCase();
+  const filter = document.getElementById('adminFilter').value;
+  const all = getAllProducts();
+  const filtered = all.filter(p => (!search||p.name.toLowerCase().includes(search)) && (filter==='all'||p.category===filter));
+  const withImg = filtered.filter(p=>getProductImage(p.name)).length;
+  document.getElementById('adminStats').textContent = `${withImg} com imagem · ${filtered.length-withImg} sem imagem · ${filtered.length} total`;
+  document.getElementById('adminGrid').innerHTML = filtered.map(p => {
+    const img = getProductImage(p.name);
+    const hasCustom = !!imageCache[p.name];
+    return `<div class="admin-card ${hasCustom?'has-custom':''}" onclick="openAdminEdit('${esc(p.name)}','${esc(p.label)}','${p.category}','${p.emoji}')">
+      ${hasCustom?'<div class="admin-badge">✓ Custom</div>':''}
+      ${img
+        ? `<img src="${img}" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><div class="admin-card-placeholder" style="display:none">${p.emoji}</div>`
+        : `<div class="admin-card-placeholder">${p.emoji}</div>`}
+      <div class="admin-card-name">${p.name}</div>
+      <div class="admin-card-cat">${p.label}</div>
+      <div class="admin-card-action">${img?'✏️ Editar':'➕ Adicionar'} imagem</div>
+    </div>`;
+  }).join('') || '<div style="text-align:center;color:var(--text-light);padding:40px;grid-column:1/-1">Nenhum produto encontrado.</div>';
+}
+
+// ============================================================
+// ADMIN EDIT IMAGE
+// ============================================================
+let editingProduct = null;
+let pendingDataUrl = null;
+
+function openAdminEdit(name, label, category, emoji) {
+  editingProduct = { name, label, category, emoji };
+  document.getElementById('adminEditName').textContent = name;
+  document.getElementById('adminEditCat').textContent = label;
+  document.getElementById('adminEditUrl').value = '';
+  document.getElementById('adminEditFile').value = '';
+  document.getElementById('savingIndicator').classList.remove('show');
+  pendingDataUrl = null;
+
+  const img = getProductImage(name);
+  const box = document.getElementById('previewBox');
+  document.getElementById('previewEmoji').textContent = emoji;
+  if (img) {
+    box.innerHTML = `<img src="${img}" onerror="this.innerHTML='<span style=font-size:36px>${emoji}</span>'">`;
+  } else {
+    box.innerHTML = `<span style="font-size:36px">${emoji}</span>`;
+  }
+  document.getElementById('adminEditModal').classList.add('open');
+}
+function closeAdminEdit() { document.getElementById('adminEditModal').classList.remove('open'); }
+document.getElementById('adminEditModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeAdminEdit(); });
+
+function previewFromUrl() {
+  const url = document.getElementById('adminEditUrl').value.trim();
+  if (!url) return;
+  const finalUrl = convertDriveUrl(url);
+  document.getElementById('previewBox').innerHTML = `<img src="${finalUrl}" onerror="this.parentElement.innerHTML='<span style=color:#c00;font-size:12px>Link inválido</span>'">`;
+  pendingDataUrl = null;
+}
+
+function previewFromFile() {
+  const file = document.getElementById('adminEditFile').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingDataUrl = e.target.result;
+    document.getElementById('previewBox').innerHTML = `<img src="${pendingDataUrl}">`;
+    document.getElementById('adminEditUrl').value = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+function convertDriveUrl(url) {
+  const m = url.match(/\/file\/d\/([^\/\?]+)/);
+  if (m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w200`;
+  const m2 = url.match(/[?&]id=([^&]+)/);
+  if (m2) return `https://drive.google.com/thumbnail?id=${m2[1]}&sz=w200`;
+  return url;
+}
+
+async function saveAdminImage() {
+  if (!editingProduct) return;
+  const url = document.getElementById('adminEditUrl').value.trim();
+  const imageData = pendingDataUrl || (url ? convertDriveUrl(url) : null);
+  if (!imageData) { alert('Cole um link ou faça upload de uma imagem.'); return; }
+
+  document.getElementById('savingIndicator').classList.add('show');
+  imageCache[editingProduct.name] = imageData;
+
+  const ok = await saveImagesToGitHub();
+  document.getElementById('savingIndicator').classList.remove('show');
+
+  if (ok) {
+    showToast('✅ Imagem salva no GitHub!');
+    closeAdminEdit();
+    renderAdminGrid();
+  } else {
+    delete imageCache[editingProduct.name];
+  }
+}
+
+async function removeAdminImage() {
+  if (!editingProduct) return;
+  if (!imageCache[editingProduct.name]) { closeAdminEdit(); return; }
+  document.getElementById('savingIndicator').classList.add('show');
+  delete imageCache[editingProduct.name];
+  const ok = await saveImagesToGitHub();
+  document.getElementById('savingIndicator').classList.remove('show');
+  if (ok) { showToast('🗑 Imagem removida.'); closeAdminEdit(); renderAdminGrid(); }
+  else imageCache[editingProduct.name] = ''; // revert
+}
+
+// ============================================================
+// TOKEN CONFIG
+// ============================================================
+function openTokenConfig() {
+  document.getElementById('tokenInput').value = getToken();
+  document.getElementById('tokenStatus').style.display = 'none';
+  document.getElementById('tokenModal').classList.add('open');
+}
+function closeTokenModal() { document.getElementById('tokenModal').classList.remove('open'); }
+document.getElementById('tokenModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeTokenModal(); });
+
+function saveToken() {
+  const t = document.getElementById('tokenInput').value.trim();
+  if (!t) { alert('Cole o token.'); return; }
+  setToken(t);
+  document.getElementById('tokenBanner').style.display = 'none';
+  closeTokenModal();
+  showToast('✅ Token salvo com sucesso!');
+}
+
+async function testToken() {
+  const t = document.getElementById('tokenInput').value.trim() || getToken();
+  if (!t) { alert('Cole o token primeiro.'); return; }
+  const statusEl = document.getElementById('tokenStatus');
+  statusEl.style.display = 'block';
+  statusEl.style.color = 'var(--gold)';
+  statusEl.textContent = '⏳ Testando conexão...';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`, {
+      headers: { 'Authorization': 'token '+t }
+    });
+    if (res.ok) {
+      statusEl.style.color = '#2e7d32';
+      statusEl.textContent = '✅ Conexão OK! Repositório encontrado.';
+    } else if (res.status === 401) {
+      statusEl.style.color = '#c0392b';
+      statusEl.textContent = '❌ Token inválido ou expirado.';
+    } else if (res.status === 404) {
+      statusEl.style.color = '#c0392b';
+      statusEl.textContent = '❌ Repositório não encontrado. Verifique se criou "doce-aroma".';
+    } else {
+      statusEl.style.color = '#c0392b';
+      statusEl.textContent = `❌ Erro ${res.status}`;
+    }
+  } catch(e) {
+    statusEl.style.color = '#c0392b';
+    statusEl.textContent = '❌ Erro de conexão.';
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+(async function init() {
+  await loadImagesFromGitHub();
+  renderAmbiente();
+  renderPerfumes(masculinoData,'masculino-grid','Perfume Masculino','👔');
+  renderPerfumes(femininoData,'feminino-grid','Perfume Feminino','🌸');
+  renderPerfumes(compartilhavelData,'compartilhavel-grid','Perfume Compartilhável','✨');
+})();
+</script>
+</body>
+</html>
