@@ -623,30 +623,52 @@ async function loadImagesFromGitHub() {
     const headers = { 'Accept': 'application/vnd.github.v3+json' };
     if (token) headers['Authorization'] = 'token ' + token;
     const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_IMAGES_FILE}`, { headers });
-    if (res.status === 404) { imageCache = {}; hiddenCache = []; return; }
-    if (!res.ok) return;
+    if (res.status === 404) { imageCache = {}; hiddenCache = []; window._customProducts = {masculino:[],feminino:[],compartilhavel:[],ambiente:{}}; return; }
+    if (!res.ok) { console.warn('GitHub load failed:', res.status); return; }
     const data = await res.json();
     imageSHA = data.sha;
-    const decoded = atob(data.content.replace(/\n/g, ''));
-    const parsed = JSON.parse(decoded);
-    // Support both old format (flat object) and new format ({images:{}, hidden:[], customProducts:{}})
-    if (parsed.images !== undefined) {
+    // Decode base64 safely handling UTF-8 special characters
+    let parsed;
+    try {
+      const base64 = data.content.replace(/\n/g, '');
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      const jsonStr = new TextDecoder('utf-8').decode(bytes);
+      parsed = JSON.parse(jsonStr);
+    } catch(decodeErr) {
+      console.warn('Decode error, retrying with raw fetch...');
+      // Fallback: fetch raw content directly
+      const rawRes = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${GITHUB_IMAGES_FILE}`);
+      if (!rawRes.ok) return;
+      parsed = await rawRes.json();
+    }
+    if (parsed && parsed.images !== undefined) {
       imageCache = parsed.images || {};
       hiddenCache = parsed.hidden || [];
       window._customProducts = parsed.customProducts || { masculino:[], feminino:[], compartilhavel:[], ambiente:{} };
-    } else {
+    } else if (parsed) {
       imageCache = parsed;
       hiddenCache = [];
       window._customProducts = { masculino:[], feminino:[], compartilhavel:[], ambiente:{} };
     }
-  } catch(e) { imageCache = {}; hiddenCache = []; }
+  } catch(e) {
+    console.warn('loadImagesFromGitHub error:', e);
+    imageCache = {}; hiddenCache = [];
+    window._customProducts = { masculino:[], feminino:[], compartilhavel:[], ambiente:{} };
+  }
 }
 
 async function saveImagesToGitHub() {
   const token = getToken();
   if (!token) { showToast('⚠️ Configure o Token GitHub primeiro!'); return false; }
   const payload = { images: imageCache, hidden: hiddenCache, customProducts: getCustomProducts() };
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+  const jsonStr = JSON.stringify(payload, null, 2);
+  // Encode UTF-8 safely
+  const bytes = new TextEncoder().encode(jsonStr);
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  const content = btoa(binary);
   const body = { message: 'Atualiza catálogo', content };
   if (imageSHA) body.sha = imageSHA;
   try {
@@ -1211,7 +1233,14 @@ function renderAll() {
 }
 
 (async function init() {
-  await loadImagesFromGitHub();
+  // Render immediately with no images so catalog is always visible
+  renderAll();
+  // Then load images from GitHub and re-render with images
+  try {
+    await loadImagesFromGitHub();
+  } catch(e) {
+    console.warn('Could not load images from GitHub:', e);
+  }
   renderAll();
 })();
 </script>
