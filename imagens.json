@@ -8,3 +8,22 @@
     "ambiente": {}
   }
 }
+{
+  "images": {
+    "ALECRIM": "https://example.com/imagens/herbais/alecrim.jpg",  
+    "ALFAZEMA (LAVANDA)": "https://www.superstock.com/cdn/5507/Comp/5507-48631366.webp",
+    "EUCALIPTO": "https://helloeucalyptus.com/cdn/shop/files/Tezza-4460.jpg?v=1740301943&width=1445",
+    "BERGAMOTA": "https://plantura.garden/uk/wp-content/uploads/sites/2/2021/10/bergamot-fruit.jpg",
+    "LIMÃO SICILIANO": "https://img.freepik.com/free-photo/some-lemon-with-branch-without-leaves-white-textured-background-side-view_176474-3923.jpg",
+    "FLOR DE CEREJEIRA": "https://thumbs.dreamstime.com/b/branch-sakura-flower-japanese-cherry-blossom-against-blue-sky-branch-sakura-japanese-cherry-blossom-prunus-427433268.jpg",
+    "JASMIN WHITE": "https://c8.alamy.com/comp/KRD16X/beautiful-white-jasmine-flowers-close-up-KRD16X.jpg",
+    "ROSAS": "https://asset.bloomnation.com/c_pad,d_vendor:global:catalog:product:image.png,f_auto,fl_preserve_transparency,q_auto/v1769501811/vendor/9342/catalog/product/2/0/20260127001648_file_697803f0be09d",
+    "MARACUJÁ": "https://blog.amigofoods.com/wp-content/uploads/2018/10/passion-fruit-pulp-1.jpg",
+    "BAUNILHA": "https://cdn.shopify.com/s/files/1/0761/6525/1392/files/pexels-pixabay-301669_1024x1024.jpg?v=1684455920",
+    "CANELA": "https://cdn.shopify.com/s/files/1/0761/6525/1392/files/pexels-pixabay-301669_1024x1024.jpg?v=1684455920",
+    "CEDRO": "https://vermontwoodsstudios.com/cdn/shop/files/cedar-wood-color-unsplash.jpg?v=1696893367&width=1500",
+    "ALGODÃO": "https://c8.alamy.com/comp/WMBK3J/fresh-white-cotton-bolls-on-the-plant-ready-for-harvesting-for-their-fluffy-fibers-forming-a-protective-capsule-around-the-oil-rich-seeds-used-to-prod-WMBK3J.jpg"
+  },
+  "hidden": [],
+  "customProducts": {}
+}
