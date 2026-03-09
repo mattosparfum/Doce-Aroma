@@ -279,5 +279,12 @@
     "feminino": [],
     "compartilhavel": [],
     "ambiente": {}
+  },
+  "prices": {
+    "AL HARAMAIN - L\\'AVENTURE": {
+      "50ml": 70,
+      "100ml": 120,
+      "Creme Hidratante": 60
+    }
   }
 }
