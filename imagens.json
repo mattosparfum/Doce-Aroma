@@ -306,5 +306,17 @@
       "100ml": 120,
       "Creme Hidratante": 60
     }
+  },
+  "globalPrices": {
+    "Refil": 35,
+    "Aromatizador": 40,
+    "Borrifador": 50,
+    "50ml": 70,
+    "100ml": 120,
+    "Creme Hidratante": 60
+  },
+  "promos": {
+    "ambiente": 0,
+    "perfumaria": 0
   }
 }
